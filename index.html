@@ -39,68 +39,7 @@
         basemap.addTo(map);
 
         // GeoJSON Polygon Jumlah Penduduk
-        var symbologyCategorized = { "Tinggi": "#1c9099", "Sedang": "#a6bddb", "Rendah": "#ece2f0" };
-        map.createPane('paneJumlahPenduduk');
-        map.getPane("paneJumlahPenduduk").style.zIndex = 301;
-        var jumlah_penduduk = L.geoJSON(null, {
-            pane: 'paneJumlahPenduduk',
-            // Style
-            style: function (feature) {
-                // return {
-                //     color: "gray",
-                //     opacity: 1,
-                //     weight: 1,
-                //     fillColor: symbologyCategorized[feature.properties.Class],
-                //     fillOpacity: 0.8,
-                // };
-                if (feature.properties.JML_PDDK_1 <= 2500) {
-                    return {
-                        opacity: 1,
-                        color: 'black',
-                        weight: 1.0,
-                        fillOpacity: 0.7,
-                        fillColor: '#ece2f0'
-                    }
-                }
-                if (feature.properties.JML_PDDK_1 > 2500 && feature.properties.JML_PDDK_1 <= 5000) {
-                    return {
-                        opacity: 1,
-                        color: 'black',
-                        weight: 1.0,
-                        fillOpacity: 0.7,
-                        fillColor: '#a6bddb'
-                    }
-                }
-                if (feature.properties.JML_PDDK_1 > 5000) {
-                    return {
-                        opacity: 1,
-                        color: 'black',
-                        weight: 1.0,
-                        fillOpacity: 0.7,
-                        fillColor: '#1c9099'
-                    }
-                }
-            },
-            // onEachFeature
-            onEachFeature: function (feature, layer) {
-                // variable popup content
-                var popup_content = "Kecamatan: " + feature.properties.KECAMATAN + "<br>" +
-                    "Nama Desa: " + feature.properties.DESA_KELUR + "<br>" +
-                    "Jumlah Penduduk: " + feature.properties.JML_PDDK_1;
-
-                layer.on({
-                    click: function (e) {
-                        jumlah_penduduk.bindPopup(popup_content);
-                    },
-                    mouseover: function (e) {
-                        jumlah_penduduk.bindTooltip(feature.properties.DESA_KELUR, {
-                            direction: "auto",
-                            sticky: true,
-                        });
-                    },
-                });
-            },
-        });
+        
 
 
         $.getJSON("data/jumlah_penduduk.geojson", function (data) {
@@ -191,6 +130,72 @@
             jalan.addData(data); // Menambahkan data ke dalam GeoJSON Polyline Jalan
             map.addLayer(jalan); // Menambahkan GeoJSON Polyline Jalan ke dalam peta
         });
+
+
+        var symbologyCategorized = { "Tinggi": "#1c9099", "Sedang": "#a6bddb", "Rendah": "#ece2f0" };
+        map.createPane('paneJumlahPenduduk');
+        map.getPane("paneJumlahPenduduk").style.zIndex = 301;
+        var jumlah_penduduk = L.geoJSON(null, {
+            pane: 'paneJumlahPenduduk',
+            // Style
+            style: function (feature) {
+                // return {
+                //     color: "gray",
+                //     opacity: 1,
+                //     weight: 1,
+                //     fillColor: symbologyCategorized[feature.properties.Class],
+                //     fillOpacity: 0.8,
+                // };
+                if (feature.properties.JML_PDDK_1 <= 2500) {
+                    return {
+                        opacity: 1,
+                        color: 'black',
+                        weight: 1.0,
+                        fillOpacity: 0.7,
+                        fillColor: '#ece2f0'
+                    }
+                }
+                if (feature.properties.JML_PDDK_1 > 2500 && feature.properties.JML_PDDK_1 <= 5000) {
+                    return {
+                        opacity: 1,
+                        color: 'black',
+                        weight: 1.0,
+                        fillOpacity: 0.7,
+                        fillColor: '#a6bddb'
+                    }
+                }
+                if (feature.properties.JML_PDDK_1 > 5000) {
+                    return {
+                        opacity: 1,
+                        color: 'black',
+                        weight: 1.0,
+                        fillOpacity: 0.7,
+                        fillColor: '#1c9099'
+                    }
+                }
+            },
+            // onEachFeature
+            onEachFeature: function (feature, layer) {
+                // variable popup content
+                var popup_content = "Kecamatan: " + feature.properties.KECAMATAN + "<br>" +
+                    "Nama Desa: " + feature.properties.DESA_KELUR + "<br>" +
+                    "Jumlah Penduduk: " + feature.properties.JML_PDDK_1;
+
+                layer.on({
+                    click: function (e) {
+                        jumlah_penduduk.bindPopup(popup_content);
+                    },
+                    mouseover: function (e) {
+                        jumlah_penduduk.bindTooltip(feature.properties.DESA_KELUR, {
+                            direction: "auto",
+                            sticky: true,
+                        });
+                    },
+                });
+            },
+        });
+
+
 
         // Control Layer
         var baseMaps = {
